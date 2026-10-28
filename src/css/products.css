@@ -1,0 +1,591 @@
+
+/* ===== PRODUCTS PAGE ===== */
+
+.products-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #f8f8ff;
+    color: #343434;
+}
+
+.products-page .MuiContainer-root {
+    width: 100%;
+    max-width: 1320px;
+    box-sizing: border-box;
+}
+
+/* ===== MAIN HEADER ===== */
+
+.products-page .avatar-big-box {
+    width: 100%;
+    margin-top: 55px;
+    align-items: center;
+}
+
+.products-page .top-title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.products-page .category-title {
+    font-family: "Dancing Script", cursive;
+    font-size: 36px;
+    font-weight: 700;
+    color: #343434;
+}
+
+/* ===== SEARCH ===== */
+
+.products-page .single-search-big-box {
+    width: 337px;
+    min-height: 42px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #fffcfc;
+    border: 1px solid #e8e3dc;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.products-page .single-search-input {
+    flex: 1;
+    min-width: 0;
+    width: 0;
+    height: 40px;
+    padding: 0 12px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #343434;
+}
+
+.products-page .single-search-big-box .single-button-search {
+    min-width: 100px;
+    height: 40px;
+    border-radius: 0;
+    background: #343434;
+    color: #d7b586;
+    box-shadow: none;
+    font-size: 12px;
+}
+
+.products-page .single-search-big-box .single-button-search:hover {
+    background: #4a4a4a;
+}
+
+/* ===== SORT BUTTONS ===== */
+
+.products-page .dishes-filter-section {
+    width: 100%;
+    margin-top: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.products-page .dishes-filter-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.products-page .dishes-filter-box .order {
+    min-width: 85px;
+    padding: 9px 18px;
+    border-radius: 7px;
+    background: #d7b586;
+    color: #343434;
+    box-shadow: none;
+    text-transform: uppercase;
+}
+
+.products-page .dishes-filter-box .order:first-child {
+    background: #343434;
+    color: #d7b586;
+}
+
+.products-page .dishes-filter-box .order:hover {
+    background: #b99562;
+    color: #fff;
+}
+
+/* ===== CATEGORY AND PRODUCTS ===== */
+
+.products-page .list-category-section {
+    width: 100%;
+    min-height: 600px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+/* Category sidebar */
+
+.products-page .product-category {
+    flex: 0 0 125px;
+    width: 125px;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.products-page .product-category .category-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    transform: none;
+}
+
+.products-page .product-category .category-main button {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    margin: 0;
+    border-radius: 7px;
+    background: #d7b586;
+    color: #343434;
+    box-shadow: none;
+    text-transform: uppercase;
+}
+
+.products-page .product-category .category-main button:hover {
+    background: #b99562;
+    color: #fff;
+}
+
+/* ===== PRODUCT GRID ===== */
+
+.products-page .product-wrapper {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 32px 24px;
+}
+
+.products-page .product-wrapper .product-card {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+/* ===== PRODUCT IMAGE ===== */
+
+.products-page .product-card .product-img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 275px;
+    min-height: 275px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0 40px 0 0;
+    background-color: #e9e5df;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* Image overlay */
+
+.products-page .product-card .product-img::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.products-page .product-card .product-img:hover::before {
+    opacity: 1;
+}
+
+/* Product size label */
+
+.products-page .product-card .product-sale {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 4;
+    min-width: 90px;
+    min-height: 30px;
+    margin: 0;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d7b586;
+    border-radius: 20px;
+    color: #343434;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+/* ===== SHOPPING CART BUTTON ===== */
+
+.products-page .product-card .shop-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    width: 52px;
+    min-width: 52px;
+    height: 52px;
+    padding: 12px;
+    border: 1px solid #d7b586;
+    border-radius: 50%;
+    background: #343434;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+.products-page .product-card .shop-btn img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.products-page .product-card .product-img:hover .shop-btn {
+    opacity: 1;
+}
+
+/* ===== VIEW BUTTON ===== */
+
+.products-page .product-card .view-btn {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 3;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 5px;
+    border-radius: 50%;
+    background: rgba(52, 52, 52, 0.85);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.products-page .product-card .product-img:hover .view-btn {
+    opacity: 1;
+}
+
+.products-page .product-card .view-btn:hover {
+    background: #343434;
+}
+
+/* ===== PRODUCT NAME AND PRICE ===== */
+
+.products-page .product-card > .product-desc {
+    width: 100%;
+    margin: 0;
+    padding: 10px 4px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.products-page .product-card .product-title {
+    display: block;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #343434;
+}
+
+/* Price icon and number on the same line */
+
+.products-page .product-card .product-desc .product-desc {
+    width: 100%;
+    margin: 5px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #d7b586;
+    box-sizing: border-box;
+}
+
+.products-page .product-card .product-desc .product-desc svg {
+    display: block;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+}
+
+/* No products */
+
+.products-page .product-wrapper .no-data {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 50px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    color: #d7b586;
+}
+
+/* ===== PAGINATION ===== */
+
+.products-page .pagination-section {
+    width: 100%;
+    margin: 40px 0 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.products-page .pagination-section .Mui-selected {
+    background-color: #d7b586 !important;
+    color: #343434 !important;
+}
+
+/* ===== FAMILY BRANDS ===== */
+
+.products-page .brands-logo {
+    width: 100%;
+    min-height: 400px;
+    margin-top: 30px;
+    padding: 55px 0;
+    display: flex;
+    background: #0d1518;
+    box-sizing: border-box;
+}
+
+.products-page .brands-logo .family-brands {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+
+.products-page .brands-logo .category-title {
+    color: #d7b686;
+    text-align: center;
+}
+
+.products-page .brands-logo .brand-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.products-page .brands-logo .review-box {
+    width: 100%;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(215, 182, 134, 0.2);
+    box-sizing: border-box;
+}
+
+.products-page .brands-logo .review-box img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+
+.products-page .brands-logo .review-box:hover img {
+    transform: scale(1.04);
+}
+
+/* ===== ADDRESS ===== */
+
+.products-page .address {
+    width: 100%;
+    margin-bottom: 60px;
+    padding: 50px 0;
+    background: #f8f8ff;
+    box-sizing: border-box;
+}
+
+.products-page .address .address-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.products-page .address .title {
+    margin-bottom: 30px;
+    font-family: "Dancing Script", cursive;
+    font-size: 36px;
+    font-weight: 700;
+    color: #343434;
+    text-align: center;
+}
+
+.products-page .address iframe {
+    display: block;
+    width: 100%;
+    max-width: 1320px;
+    height: 500px;
+    border: 0;
+    border-radius: 12px;
+}
+
+/* ===== RESPONSIVE: TABLET ===== */
+
+@media (max-width: 1100px) {
+    .products-page .product-wrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .products-page .product-category {
+        flex-basis: 115px;
+        width: 115px;
+    }
+
+    .products-page .product-card .product-img {
+        height: 250px;
+        min-height: 250px;
+    }
+
+    .products-page .brands-logo .brand-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ===== RESPONSIVE: MOBILE ===== */
+
+@media (max-width: 700px) {
+    .products-page .avatar-big-box {
+        margin-top: 30px;
+    }
+
+    .products-page .top-title {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .products-page .category-title {
+        font-size: 30px;
+    }
+
+    .products-page .single-search-big-box {
+        width: 100%;
+    }
+
+    .products-page .dishes-filter-section {
+        margin-top: 25px;
+    }
+
+    .products-page .dishes-filter-box {
+        justify-content: flex-start;
+    }
+
+    .products-page .list-category-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .products-page .product-category {
+        width: 100%;
+        flex: none;
+    }
+
+    .products-page .product-category .category-main {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .products-page .product-category .category-main button {
+        width: auto;
+        min-width: 85px;
+    }
+
+    .products-page .product-wrapper {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px 14px;
+    }
+
+    .products-page .product-card .product-img {
+        height: 220px;
+        min-height: 220px;
+        border-radius: 0 28px 0 0;
+    }
+
+    .products-page .brands-logo .brand-list {
+        gap: 14px;
+    }
+
+    .products-page .brands-logo .review-box {
+        height: 170px;
+    }
+
+    .products-page .address iframe {
+        height: 350px;
+    }
+}
+
+/* ===== RESPONSIVE: SMALL MOBILE ===== */
+
+@media (max-width: 420px) {
+    .products-page .product-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .products-page .product-card .product-img {
+        height: 280px;
+        min-height: 280px;
+    }
+
+    .products-page .brands-logo .brand-list {
+        grid-template-columns: 1fr;
+    }
+
+    .products-page .brands-logo .review-box {
+        height: 220px;
+    }
+}
