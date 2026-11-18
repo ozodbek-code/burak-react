@@ -50,7 +50,8 @@ export default function HomePage() {
   const member = new MemberService();
   member
   .getTopUsers()
-  .then(data => setTopUsers(data))
+  .then(data =>  {   console.log("topUsers:", data);
+    setTopUsers(data)})
   .catch((err) =>  console.log(err))
   
    }, []);
