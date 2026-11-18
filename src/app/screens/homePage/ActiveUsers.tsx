@@ -5,15 +5,20 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import Typography from "@mui/joy/Typography";
 import CardOverflow from "@mui/joy/CardOverflow";
 import AspectRatio from "@mui/joy/AspectRatio";
+import { createSelector } from "@reduxjs/toolkit";
+import { retrieveTopUsers } from "./selector";
+import { useSelector } from "react-redux";
+import { serverApi } from "../../../lib/config";
 
-const activeUsers = [
-  { memberNick: "Martin", memberImage: "/img/martin.webp" },
-  { memberNick: "Justin", memberImage: "/img/justin.webp" },
-  { memberNick: "Rose", memberImage: "/img/rose.webp" },
-  { memberNick: "Nusret", memberImage: "/img/nusret.webp" },
-];
+/** REDUX SLICE & SELECTOR */
+
+const topUsersRetriever = createSelector(
+   retrieveTopUsers,
+   (topUsers) => ({ topUsers })
+);
 
 export default function ActiveUsers() {
+  const { topUsers } = useSelector(topUsersRetriever);
   return (
     <div className="active-users-frame">
       <Container>
@@ -22,27 +27,30 @@ export default function ActiveUsers() {
 
           <Stack className="cards-frame">
             <CssVarsProvider>
-              {activeUsers.length !== 0 ? (
-                activeUsers.map((ele, index) => (
+              {topUsers.length !== 0 ? (
+                topUsers.map((member) => {
+                 const imagePath = `${serverApi}/${member.memberImage}`
+                return (
                   <Card
-                    key={index}
+                    key={member._id}
                     variant="outlined"
                     className="card"
                   >
                     <CardOverflow>
                       <AspectRatio ratio="1">
                         <img
-                          src={ele.memberImage}
-                          alt={ele.memberNick}
+                          src={member.memberImage}
+                          alt={member.memberNick}
                         />
                       </AspectRatio>
                     </CardOverflow>
 
                     <Typography className="member-nickname">
-                      {ele.memberNick}
+                      {member.memberNick}
                     </Typography>
                   </Card>
-                ))
+                );
+              })
               ) : (
                 <Box className="no-data">
                   No Active Users!
