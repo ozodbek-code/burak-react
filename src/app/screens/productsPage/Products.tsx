@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -11,49 +11,54 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
-import { setProducts } from "./slice"
+import { setProducts } from "./slice";
 import { Product } from "../../../lib/types/product";
 import { retrieveProducts } from "./selector";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enam";
+import { serverApi } from "../../../lib/config";
 
 /** REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
-   setProducts: (data: Product[]) => dispatch(setProducts(data)),
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
 });
-const productsRetriever = createSelector (retrieveProducts, (products) => ({
-    products,
-  }),
-);
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
-
-const products = [
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
+/** CATEGORIES (avval e'lon qilinmagan edi) */
+const categories = [
+  { key: ProductCollection.DISH, label: "Dish" },
+  { key: ProductCollection.SALAD, label: "Salad" },
+  { key: ProductCollection.DRINK, label: "Drink" },
+  { key: ProductCollection.DESSERT, label: "Dessert" },
+  { key: ProductCollection.OTHER, label: "Other" },
 ];
 
 export default function Products() {
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productsRetriever);
+
+  // activeCategory state qo'shildi
+  const [activeCategory, setActiveCategory] = useState<ProductCollection>(
+    ProductCollection.DISH
+  );
+  // search input uchun state (value={""} input'ni qotirib qo'ygan edi)
   const [searchText, setSearchText] = useState<string>("");
-  const [activeOrder, setActiveOrder] = useState<string>("createdAt");
-  const [activeCategory, setActiveCategory] = useState<string>("DISH");
 
-  const orders = [
-    { key: "createdAt", label: "New" },
-    { key: "productPrice", label: "Price" },
-    { key: "productViews", label: "Views" },
-  ];
-
-  const categories = [
-    { key: "OTHER", label: "Other" },
-    { key: "DESSERT", label: "Dessert" },
-    { key: "DRINK", label: "Drink" },
-    { key: "SALAD", label: "Salad" },
-    { key: "DISH", label: "Dish" },
-  ];
+  useEffect(() => {
+    const productService = new ProductService();
+    productService
+      .getProducts({
+        page: 1,
+        limit: 8,
+        order: "createdAt",
+        productCollection: ProductCollection.DISH,
+        search: "",
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, [activeCategory]);
 
   return (
     <div className={"products-page"}>
@@ -83,98 +88,110 @@ export default function Products() {
           </Stack>
 
           <Stack className={"dishes-filter-section"}>
-  <Stack className={"dishes-filter-box"}>
-    <Button
-      variant={"contained"}
-      color={"primary"}
-      className={"order"}
-    >
-      New
-    </Button>
-    <Button
-      variant={"contained"}
-      color={"secondary"}
-      className={"order"}
-    >
-      Price
-    </Button>
-    <Button
-      variant={"contained"}
-      color={"secondary"}
-      className={"order"}
-    >
-      Views
-    </Button>
-  </Stack>
-</Stack>
-
-         <Stack className={"list-category-section"}>
-  <Stack className={"product-category"}>
-    <Stack className={"category-main"}>
-      {categories.map((category) => (
-        <Button
-          key={category.key}
-          variant={"contained"}
-          color={
-            activeCategory === category.key ? "primary" : "secondary"
-          }
-          onClick={() => setActiveCategory(category.key)}
-        >
-          {category.label}
-        </Button>
-      ))}
-    </Stack>
-  </Stack>
-
-  <Stack className={"product-wrapper"}>
-    {products.length !== 0 ? (
-      products.map((product, index) => (
-        <Stack key={index} className={"product-card"}>
-        <Stack
-  className={"product-img"}
-  sx={{
-    backgroundImage: `url("${product.imagePath}")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
->
-            <div className={"product-sale"}>Normal size</div>
-
-            <Button className={"shop-btn"}>
-              <img
-                src={"/icons/shopping-cart.svg"}
-                alt="cart"
-                style={{ display: "flex" }}
-              />
-            </Button>
-
-            <Button className={"view-btn"}>
-              <Badge badgeContent={20} color="secondary">
-                <RemoveRedEyeIcon sx={{ color: "white" }} />
-              </Badge>
-            </Button>
+            <Stack className={"dishes-filter-box"}>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                className={"order"}
+              >
+                New
+              </Button>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                className={"order"}
+              >
+                Price
+              </Button>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                className={"order"}
+              >
+                Views
+              </Button>
+            </Stack>
           </Stack>
 
-          <Box className={"product-desc"}>
-            <span className={"product-title"}>
-              {product.productName}
-            </span>
+          <Stack className={"list-category-section"}>
+            <Stack className={"product-category"}>
+              <Stack className={"category-main"}>
 
-            <div className={"product-desc"}>
-              <MonetizationOnIcon />
-              {15}
-            </div>
-          </Box>
-        </Stack>
-      ))
-    ) : (
-      <Box className={"no-data"}>
-        Products are not available!
-      </Box>
-    )}
-  </Stack>
-</Stack>
+                {categories.map((category) => (
+                  <Button
+                    key={category.key}
+                    variant={"contained"}
+                    color={
+                      activeCategory === category.key ? "primary" : "secondary"
+                    }
+                    onClick={() => setActiveCategory(category.key)}
+                  >
+                    {category.label}
+                  </Button>
+                ))}
+              </Stack>
+            </Stack>
+
+            <Stack className={"product-wrapper"}>
+              {products.length !== 0 ? (
+                products.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + " litre "
+                      : product.productSize + " size ";
+                  return (
+                    <Stack key={product._id} className={"product-card"}>
+                      <Stack
+                        className={"product-img"}
+                        sx={{
+                          backgroundImage: `url("${imagePath}")`,
+                        }}
+                      >
+                        <div className={"product-sale"}>{sizeVolume}</div>
+
+                        <Button className={"shop-btn"}>
+                          <img
+                            src={"/icons/shopping-cart.svg"}
+                            alt="cart"
+                            style={{ display: "flex" }}
+                          />
+                        </Button>
+
+                        <Button className={"view-btn"}>
+                          <Badge
+                            badgeContent={product.productViews}
+                            color="secondary"
+                          >
+                            <RemoveRedEyeIcon
+                              sx={{
+                                color:
+                                  product.productViews === 0 ? "grey" : "white",
+                              }}
+                            />
+                          </Badge>
+                        </Button>
+                      </Stack>
+
+                 
+                      <Box className={"product-desc-box"}>
+                        <span className={"product-title"}>
+                          {product.productName}
+                        </span>
+
+                        <div className={"product-desc"}>
+                          <MonetizationOnIcon />
+                          {product.productPrice}
+                        </div>
+                      </Box>
+                    </Stack>
+                  );
+                })
+              ) : (
+                <Box className={"no-data"}>Products are not available!</Box>
+              )}
+            </Stack>
+          </Stack>
 
           <Stack className={"pagination-section"}>
             <Pagination
