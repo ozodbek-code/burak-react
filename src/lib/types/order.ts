@@ -20,6 +20,7 @@ export interface OrderItem {
 }
 
 export interface Order {
+    productData: Product[];
     _id: string;
     orderTotal: number;
     orderDelivery: number;
